@@ -4,9 +4,21 @@
     <meta charset="UTF-8">
     <title>Интернет-магазин</title>
     <style>
-        .products { 
-            width: 500px;
-            font-size: 120%; 
+        header {
+            height: 70px;
+            padding: 20px;
+        }
+        .products {
+            display: flex;
+            justify-content: space-around;
+        }
+        .product { 
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            
+            width: 200px;
+            font-size: 100%; 
             font-family: Verdana, Arial, Helvetica, sans-serif; 
             color: #010116; 
             background-color: rgb(181, 196, 196);
@@ -15,7 +27,7 @@
             background-color: rgb(7, 116, 116);
         }
         .btn-cart {
-            font-size: 120%; 
+            font-size: 100%; 
             font-family: Verdana, Arial, Helvetica, sans-serif; 
             color: #010116; 
             background-color: rgb(123, 153, 153);
