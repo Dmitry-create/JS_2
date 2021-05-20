@@ -96,10 +96,6 @@ img {
     width: 300px;
 }
 
-.cart_visible {
-    float: right;
-}
-
 .invisible {
     display: none;
     position: absolute;
@@ -108,14 +104,18 @@ img {
 .visible {
     display: block;
     position: absolute;
-    margin-top: 50px;
-    width: 100px;
-    height: 50px;
-    background-color: #fafafa;
-    border: black;
+    box-shadow: 0 0 5px rgb(0 0 0 / 62%);
+    border-radius: 5px;
+    box-sizing: border-box;
+    top: 90px;
+    right: 35px;
+    background-color: white;
+    padding: 20px;
+    color: black;
+    width: 300px;
 }
 
-.cart-block:before {
+.cart-block {
     content: '';
     width: 0;
     height: 0;
@@ -125,6 +125,13 @@ img {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-bottom: 10px solid white;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cart-block_item {
+    display: flex;
+    justify-content: space-between;
 }
 
 .buy-btn,

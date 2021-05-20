@@ -3,13 +3,14 @@ const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-a
 const app = new Vue({
   el: '#app',
   data: {
-    catalogUrl: '/catalogData.json',
-    products: [],
+   
     imgCatalog: 'https://placehold.it/200x150',
-    searchLine: null,
+    imgCart: 'https://placehold.it/50x100',
+    searchLine: null,    
+    inVisible: false,
+    cartItem:[],
+    products: [],
     filtered:[],
-    inVisible: false
-
   },
   methods: {
     getJson(url){
@@ -20,28 +21,59 @@ const app = new Vue({
         })
     },
     addProduct(product){
-      console.log(product.id_product);
-    },
+        this.getJson(`${API}/addToBasket.json`)
+          .then(data => {
+            if (data.result === 1) {
+              let find = this.cartItem.find(el => el.id_product === product.id_product);
+              if (find) {
+                find.quantity++;
+              } else {
+                let prod = {...product};
+                prod['quantity'] = 1;
+                this.cartItem.push(prod)
+              }
+            } else {
+              alert('Error');
+            }
+          })
+      },
+    
     filterGoods(value){
-      const regexp = new RegExp(value, 'i'); //
+      const regexp = new RegExp(value, 'i'); 
     this.filtered = this.products.filter(product => regexp.test(product.product_name));
-    console.log(this.filtered )
-    } 
-  },
+    
+    },
+ 
+    deleteCart(item){
+      this.getJson(`${API}/deleteFromBasket.json`)
+      .then(data => {
+        if (data.result === 1) {
+          if(item.quantity > 1){
+            item.quantity--;
+          }else{
+            this.cartItem.splice(this.cartItem.indexOf(item),1)
+          }
+        }
+      })
+    }
+  }, 
   
+
   beforeCreate() {},
   created() {
-    this.getJson(`${API + this.catalogUrl}`)
+    this.getJson(`${API }/catalogData.json`)
       .then(data => {
         for(let el of data){
           this.products.push(el);
+          this.filtered.push(el);
+        }
+      });
+    this.getJson(`${API}/getBasket.json`)
+      .then(data => {
+        for (let item  of data.contents){
+          this.cartItem.push(item);
+        
         }
       });
   },
-  beforeMount() {},
-  mounted(){},
-  beforeUpdate() {},
-  updated() {},
-  beforeDestroy() {},
-  destroyed() {},
 });
